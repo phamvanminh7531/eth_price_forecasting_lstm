@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
+    <title>ETH Price Foracsting System</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-10 mx-auto mt-5">
+
+                <h1 class="strong" style="color: rgb(255, 58, 9);">Biểu Đồ Giá ETH Theo Ngày</h1>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-10 mx-auto mt-5">
+
+                <canvas id="myChart" width="600" height="400"></canvas>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        var graphData = {
+            type: 'line',
+            data: {
+                labels: ['18 day before','17 day before','16 day before','15 day before','14 day before','13 day before',
+                '12 day before','11 day before','10 day before','9 day before','8 day before','7 day before','6 day before',
+                '5 day before','4 day before','3 day before','2 day before','1 day before','Today','1 day after','2 day after','3 day after','4 day after','5 day after'],
+                datasets: [{
+                    data: {{ value|escapejs }},
+                    label: "Current Price",
+                    borderColor: "#3e95cd",
+                    fill: false,
+                    lineTension: 0.2,
+                },
+
+                {
+                    data: {{ future|escapejs }},
+                    label: "Forcasting Line",
+                    borderColor: "#3cba9f",
+                    fill: false,
+                    lineTension: 0.2,
+                },
+            
+            ]
+            },
+            options: {
+                bezierCurve: true,
+                animation : false,
+            } 
+        }
+        const myChart = new Chart(ctx, graphData);
+    </script>
+</body>
+</html>
